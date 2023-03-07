@@ -15,10 +15,20 @@
   align-items: center;
   max-width: 100%;
   height: 60px;
-  background: linear-gradient(to right, #a5d9c8, 80.73%, #f6f0c6);
+  background: linear-gradient(
+    to right,
+    var(--primary),
+    80.73%,
+    var(--secondary)
+  );
 
   @media (max-width: 425px) {
-    background: linear-gradient(to right, #a5d9c8, 76.56%, #f6f0c6);
+    background: linear-gradient(
+      to right,
+      var(--primary),
+      76.56%,
+      var(--secondary)
+    );
   }
 }
 
@@ -41,7 +51,7 @@
 .title {
   font-size: 40px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--secondary-text);
 
   @media (max-width: 425px) {
     font-size: 20px;

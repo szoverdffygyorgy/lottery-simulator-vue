@@ -21,6 +21,37 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --blue1: #020056;
+  --green1: #a5d9c8;
+  --green2: #e9f5f1;
+  --grey1: #e5e5e5;
+  --yellow1: #f6f0c6;
+  --white: #fff;
+
+  --background: var(--grey1);
+
+  --button-background: var(--white);
+  --button-text: var(--blue1);
+
+  --checkbox-background: var(--white);
+  --checkbox-border: var(--blue1);
+  --checkbox-color: var(--blue1);
+
+  --input-border: var(--green1);
+  --input-disabled-background: var(--white);
+  --input-text: var(--blue1);
+
+  --main-container-background: var(--white);
+
+  --primary: var(--green1);
+  --primary-text: var(--blue1);
+  --secondary: var(--yellow1);
+  --secondary-text: var(--white);
+
+  --slider-thumb: var(--white);
+  --slider-thumb-border: var(--green1);
+  --slider-track: var(--green2);
 }
 
 a {
