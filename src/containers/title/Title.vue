@@ -22,7 +22,7 @@
     var(--secondary)
   );
 
-  @media (max-width: 425px) {
+  @media (max-width: var(--breakpoints-mobile)) {
     background: linear-gradient(
       to right,
       var(--primary),
@@ -38,7 +38,7 @@
   height: 100%;
   padding: 0 32px 0 20px;
 
-  @media (max-width: 425px) {
+  @media (max-width: var(--breakpoints-mobile)) {
     padding: 0 16px 0 20px;
   }
 }
@@ -53,7 +53,7 @@
   font-weight: 700;
   color: var(--secondary-text);
 
-  @media (max-width: 425px) {
+  @media (max-width: var(--breakpoints-mobile)) {
     font-size: 20px;
   }
 }
