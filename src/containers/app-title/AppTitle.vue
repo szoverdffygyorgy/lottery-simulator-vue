@@ -5,7 +5,7 @@
     <div class="logo-container">
       <img class="logo" src="/mito.svg" alt="mito" />
     </div>
-    <h1 class="title">Lottery simulator</h1>
+    <h1 class="title">Lottery Simulator</h1>
   </div>
 </template>
 
