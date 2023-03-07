@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import Title from "./containers/title/Title.vue";
-import MainContainer from "./containers/main-container/MainContainer.vue";
+import MainContainer from './containers/main-container/MainContainer.vue';
+import AppTitle from './containers/app-title/AppTitle.vue';
 </script>
 
 <template>
   <div class="app-container">
-    <Title />
+    <AppTitle />
     <MainContainer />
     <button class="reset-button">Reset progress</button>
   </div>
