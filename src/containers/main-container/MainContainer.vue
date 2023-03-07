@@ -1,13 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import AggregatedResults from '../aggergated-resutls/AggergatedResults.vue';
+</script>
 
 <template>
-  <div class="container">
+  <div class="main-container">
     <h2 class="title">Result</h2>
+    <AggregatedResults />
   </div>
 </template>
 
 <style scoped>
-.container {
+.main-container {
   position: relative;
   display: flex;
   flex-direction: column;
