@@ -25,7 +25,7 @@ const {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .container {
   display: flex;
   flex-direction: column;
@@ -34,6 +34,11 @@ const {
   padding: 18px 19px 11px 24px;
   background-color: var(--primary);
   border-radius: 10px;
+
+  @media (max-width: 425px) {
+    margin-bottom: 25px;
+    padding: 12px 16px 15px 12px;
+  }
 }
 
 .label {
@@ -46,12 +51,20 @@ const {
   font-size: 16px;
   font-weight: 700;
   color: var(--secondary-text);
+
+  @media (max-width: 425px) {
+    font-size: 14px;
+  }
 }
 
 .attempts-label {
   font-size: 16px;
   font-weight: 800;
   color: var(--secondary-text);
+
+  @media (max-width: 425px) {
+    font-size: 14px;
+  }
 }
 
 .grid {
@@ -60,22 +73,8 @@ const {
   grid-template-columns: 56.92% 43.08%;
   width: 100%;
   height: 100%;
-}
 
-@media (max-width: 425px) {
-  .container {
-    margin-bottom: 25px;
-  }
-
-  .large-label {
-    font-size: 14px;
-  }
-
-  .attempts-label {
-    font-size: 14px;
-  }
-
-  .grid {
+  @media (max-width: 425px) {
     row-gap: 8px;
     grid-template-columns: 52.43% 47.57%;
   }

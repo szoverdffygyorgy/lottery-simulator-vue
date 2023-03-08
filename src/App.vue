@@ -11,7 +11,7 @@ import AppTitle from './containers/app-title/AppTitle.vue';
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .app-container {
   width: 100vw;
   height: 100vh;
@@ -30,9 +30,9 @@ import AppTitle from './containers/app-title/AppTitle.vue';
   background-color: var(--button-background);
   color: var(--button-text);
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-}
 
-.reset-button:hover {
-  cursor: pointer;
+  &:hover {
+    cursor: pointer;
+  }
 }
 </style>

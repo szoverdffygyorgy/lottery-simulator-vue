@@ -9,7 +9,7 @@
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .container {
   display: flex;
   align-items: center;
@@ -21,6 +21,15 @@
     80.73%,
     var(--secondary)
   );
+
+  @media (max-width: 425px) {
+    background: linear-gradient(
+      to right,
+      var(--primary),
+      76.56%,
+      var(--secondary)
+    );
+  }
 }
 
 .logo-container {
@@ -28,6 +37,10 @@
   align-items: center;
   height: 100%;
   padding: 0 32px 0 20px;
+
+  @media (max-width: 424px) {
+    padding: 0 16px 0 20px;
+  }
 }
 
 .logo {
@@ -39,21 +52,8 @@
   font-size: 40px;
   font-weight: 700;
   color: var(--secondary-text);
-}
 
-@media (max-width: 425px) {
-  .container {
-    background: linear-gradient(
-      to right,
-      var(--primary),
-      76.56%,
-      var(--secondary)
-    );
-  }
-  .logo-container {
-    padding: 0 16px 0 20px;
-  }
-  .title {
+  @media (max-width: 425px) {
     font-size: 20px;
   }
 }

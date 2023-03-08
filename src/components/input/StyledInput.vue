@@ -2,7 +2,7 @@
 import { useStore } from 'vuex';
 import { State } from '../../store/types';
 
-defineProps(['disabled', 'value']);
+defineProps(['disabled', 'index', 'value']);
 
 const {
   state: { numbersInPlay },
@@ -23,7 +23,7 @@ const onValueChange = (event: Event) => {
   />
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .styled-input {
   -moz-appearance: textfield;
   width: 34px;
@@ -37,28 +37,26 @@ const onValueChange = (event: Event) => {
   text-align: center;
   color: var(--primary-text);
   filter: drop-shadow(1px 1px 6px rgba(0, 0, 0, 0.15));
-}
 
-.styled-input:not(:last-of-type) {
-  margin-right: 16px;
-}
+  &:not(:last-of-type) {
+    margin-right: 16px;
+  }
 
-.styled-input::-webkit-outer-spin-button,
-.styled-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 
-@media (max-width: 425px) {
-  .styled-input {
+  @media (max-width: 425px) {
     width: 22px;
     height: 25px;
     border-radius: 5px;
     font-size: 12px;
-  }
 
-  .styled-input:not(:last-of-type) {
-    margin-right: 12px;
+    &:not(:last-of-type) {
+      margin-right: 12px;
+    }
   }
 }
 </style>

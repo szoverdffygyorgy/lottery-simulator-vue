@@ -1,6 +1,55 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { useStore } from 'vuex';
+import {
+  MAX_NUMBER,
+  MIN_NUMBER,
+  NUMBER_OF_NUMBERS_TO_DRAW,
+} from '../../constants';
+import { State } from '../../store/types';
+import { InputFriendlyNumber } from '../../types';
+import randomInt from '../../utils/random/random-int';
 import AggregatedResults from '../aggergated-resutls/AggergatedResults.vue';
+import LotterySpeed from '../lottery-speed/LotterySpeed.vue';
 import LotterySuccess from '../lottery-success/LotterySuccess.vue';
+import UserNumberRandomizer from '../user-number-randomizer/UserNumberRandomizer.vue';
+import UserNumbers from '../user-numbers/UserNumbers.vue';
+import WinningNumbers from '../winning-numbers/WinningNumbers.vue';
+
+const store = useStore<State>();
+
+const interval = ref<number>();
+
+const getLotteryNumbers = () => {
+  const numbers = Array.from<InputFriendlyNumber>({
+    length: NUMBER_OF_NUMBERS_TO_DRAW,
+  }).map((v, i, arr) => randomInt(MIN_NUMBER, MAX_NUMBER, arr));
+
+  store.dispatch('setDrawnNumbers', { drawnNumbers: numbers });
+};
+
+store.watch(
+  (_, getters) => getters.drawSpeed,
+  (newInterval) => {
+    console.log({ newInterval });
+
+    if (interval.value) {
+      window.clearInterval(interval.value);
+    }
+
+    interval.value = window.setInterval(() => getLotteryNumbers(), newInterval);
+  },
+  { immediate: true }
+);
+
+store.watch(
+  (_, getters) => getters.isDrawing,
+  (isDrawing) => {
+    if (!isDrawing) {
+      window.clearInterval(interval.value);
+    }
+  }
+);
 </script>
 
 <template>
@@ -8,10 +57,14 @@ import LotterySuccess from '../lottery-success/LotterySuccess.vue';
     <h2 class="title">Result</h2>
     <AggregatedResults />
     <LotterySuccess />
+    <WinningNumbers />
+    <UserNumbers />
+    <UserNumberRandomizer />
+    <LotterySpeed />
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="scss">
 .main-container {
   position: relative;
   display: flex;
@@ -23,6 +76,13 @@ import LotterySuccess from '../lottery-success/LotterySuccess.vue';
   border-radius: 24px;
   background-color: var(--main-container-background);
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 425px) {
+    max-width: 320px;
+    max-height: 572px;
+    padding: 16px 16px 32px 16px;
+    border-radius: 0;
+  }
 }
 
 .title {
@@ -31,16 +91,8 @@ import LotterySuccess from '../lottery-success/LotterySuccess.vue';
   font-size: 40px;
   font-weight: 700;
   color: var(--primary-text);
-}
 
-@media (max-width: 425px) {
-  .main-container {
-    max-width: 320px;
-    max-height: 572px;
-    padding: 16px 16px 32px 16px;
-    border-radius: 0;
-  }
-  .title {
+  @media (max-width: 425px) {
     margin-bottom: 24px;
     font-size: 32px;
   }
