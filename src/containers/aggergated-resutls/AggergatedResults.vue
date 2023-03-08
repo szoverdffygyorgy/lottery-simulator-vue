@@ -1,5 +1,10 @@
 <script setup lang="ts">
-const attempts = 1234;
+import { useStore } from 'vuex';
+import { State } from '../../store/types';
+
+const {
+  state: { attempts },
+} = useStore<State>();
 </script>
 
 <template>
@@ -29,10 +34,6 @@ const attempts = 1234;
   padding: 18px 19px 11px 24px;
   background-color: var(--primary);
   border-radius: 10px;
-
-  @media (max-width: var(--breakpoints-mobile)) {
-    margin-bottom: 25px;
-  }
 }
 
 .label {
@@ -45,20 +46,12 @@ const attempts = 1234;
   font-size: 16px;
   font-weight: 700;
   color: var(--secondary-text);
-
-  @media (max-width: var(--breakpoints-mobile)) {
-    font-size: 14px;
-  }
 }
 
 .attempts-label {
   font-size: 16px;
   font-weight: 800;
   color: var(--secondary-text);
-
-  @media (max-width: var(--breakpoints-mobile)) {
-    font-size: 14px;
-  }
 }
 
 .grid {
@@ -67,8 +60,22 @@ const attempts = 1234;
   grid-template-columns: 56.92% 43.08%;
   width: 100%;
   height: 100%;
+}
 
-  @media max-width: var(--breakpoints-mobile) {
+@media (max-width: 425px) {
+  .container {
+    margin-bottom: 25px;
+  }
+
+  .large-label {
+    font-size: 14px;
+  }
+
+  .attempts-label {
+    font-size: 14px;
+  }
+
+  .grid {
     row-gap: 8px;
     grid-template-columns: 52.43% 47.57%;
   }
