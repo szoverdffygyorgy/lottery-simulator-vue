@@ -1,9 +1,18 @@
 <script setup lang="ts">
+import { NOOP } from '@vue/shared';
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { MAX_DRAW_SPEED, MIN_DRAW_SPEED } from '../../constants';
 import { State } from '../../store/types';
 
 const store = useStore<State>();
+
+const value = computed({
+  get(): number {
+    return store.getters.drawSpeed || MIN_DRAW_SPEED;
+  },
+  set: NOOP,
+});
 
 const onChange = (event: Event) => {
   store.dispatch('setDrawSpeed', {
@@ -19,7 +28,7 @@ const onChange = (event: Event) => {
       type="range"
       :min="MIN_DRAW_SPEED"
       :max="MAX_DRAW_SPEED"
-      :value="store.state.drawSpeed || MIN_DRAW_SPEED"
+      v-model="value"
       @input="onChange"
     />
   </div>

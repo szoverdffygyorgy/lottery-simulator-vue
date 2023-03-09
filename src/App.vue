@@ -1,13 +1,36 @@
 <script setup lang="ts">
 import MainContainer from './containers/main-container/MainContainer.vue';
 import AppTitle from './containers/app-title/AppTitle.vue';
+import { useStore } from 'vuex';
+import { State } from './store/types';
+import storage from './utils/storage/storage';
+import { DEFAULT_STATE } from './store/constants';
+
+const store = useStore<State>();
+
+const onResetClick = () => store.replaceState({ ...DEFAULT_STATE });
+
+store.watch(
+  (_, getters) => getters.attempts,
+  (attempts) => storage.set('attempts', attempts)
+);
+
+store.watch(
+  (_, getters) => getters.drawSpeed,
+  (drawSpeed) => storage.set('draw-speed', drawSpeed)
+);
+
+store.watch(
+  (_, getters) => getters.results,
+  (results) => storage.set('results', results)
+);
 </script>
 
 <template>
   <div class="app-container">
     <AppTitle />
     <MainContainer />
-    <button class="reset-button">Reset progress</button>
+    <button class="reset-button" @click="onResetClick">Reset progress</button>
   </div>
 </template>
 
@@ -33,6 +56,7 @@ import AppTitle from './containers/app-title/AppTitle.vue';
 
   &:hover {
     cursor: pointer;
+    background-color: var(--button-background--hover);
   }
 }
 </style>

@@ -1,23 +1,22 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { State } from '../../store/types';
 
 const store = useStore<State>();
 
-const onChange = () => {
-  store.dispatch('setIsUsingRandomValues', {
-    isUsingRandomValues: !store.getters.isUsingRandomValues,
-  });
-};
+const checked = computed({
+  get(): boolean {
+    return store.getters.isUsingRandomValues;
+  },
+  set(newValue: boolean): void {
+    store.dispatch('setIsUsingRandomValues', { isUsingRandomValues: newValue });
+  },
+});
 </script>
 
 <template>
-  <input
-    class="styled-checkbox"
-    type="checkbox"
-    :value="store.getters.isUsingRandomValues"
-    @change="onChange"
-  />
+  <input class="styled-checkbox" type="checkbox" v-model="checked" />
 </template>
 
 <style scoped lang="scss">

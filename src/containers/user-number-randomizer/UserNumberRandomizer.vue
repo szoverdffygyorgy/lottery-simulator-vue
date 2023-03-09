@@ -1,30 +1,27 @@
 <script setup lang="ts">
 import { useStore } from 'vuex';
 import StyledCheckbox from '../../components/checkbox/StyledCheckbox.vue';
-import {
-  MAX_NUMBER,
-  MIN_NUMBER,
-  NUMBER_OF_NUMBERS_TO_DRAW,
-} from '../../constants';
+import { NUMBER_OF_NUMBERS_TO_DRAW } from '../../constants';
 import { State } from '../../store/types';
 import { InputFriendlyNumber } from '../../types';
-import randomInt from '../../utils/random/random-int';
+import drawNumbers from '../../utils/draw-numbers/draw-numbers';
 
 const store = useStore<State>();
 
 store.watch(
   () => store.getters.isUsingRandomValues,
   (isUsingRandomValues) => {
-    const newNumbersInPlay: InputFriendlyNumber[] = Array.from({
-      length: NUMBER_OF_NUMBERS_TO_DRAW,
-    });
+    const newNumbersInPlay: InputFriendlyNumber[] = Array.from(
+      {
+        length: NUMBER_OF_NUMBERS_TO_DRAW,
+      },
+      () => ''
+    );
 
     store.dispatch('setNumbersInPlay', {
-      numbersInPlay: newNumbersInPlay.map<InputFriendlyNumber>(
-        isUsingRandomValues
-          ? (v, i, arr) => randomInt(MIN_NUMBER, MAX_NUMBER, arr)
-          : () => ''
-      ),
+      numbersInPlay: isUsingRandomValues
+        ? drawNumbers(newNumbersInPlay)
+        : newNumbersInPlay,
     });
   }
 );

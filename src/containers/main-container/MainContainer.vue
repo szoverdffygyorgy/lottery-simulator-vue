@@ -1,15 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { useStore } from 'vuex';
-import {
-  MAX_NUMBER,
-  MIN_NUMBER,
-  NUMBER_OF_NUMBERS_TO_DRAW,
-} from '../../constants';
+import { NUMBER_OF_NUMBERS_TO_DRAW } from '../../constants';
 import { NUMBER_MAP } from '../../store/constants';
 import { State } from '../../store/types';
 import { InputFriendlyNumber } from '../../types';
-import randomInt from '../../utils/random/random-int';
+import drawNumbers from '../../utils/draw-numbers/draw-numbers';
 import AggregatedResults from '../aggergated-resutls/AggergatedResults.vue';
 import LotterySpeed from '../lottery-speed/LotterySpeed.vue';
 import LotterySuccess from '../lottery-success/LotterySuccess.vue';
@@ -22,11 +18,14 @@ const store = useStore<State>();
 const interval = ref<number>();
 
 const getLotteryNumbers = () => {
-  const numbers = Array.from<InputFriendlyNumber>({
-    length: NUMBER_OF_NUMBERS_TO_DRAW,
-  }).map((v, i, arr) => randomInt(MIN_NUMBER, MAX_NUMBER, arr));
+  const numbers: InputFriendlyNumber[] = Array.from(
+    {
+      length: NUMBER_OF_NUMBERS_TO_DRAW,
+    },
+    () => ''
+  );
 
-  store.dispatch('setDrawnNumbers', { drawnNumbers: numbers });
+  store.dispatch('setDrawnNumbers', { drawnNumbers: drawNumbers(numbers) });
 
   if (
     store.getters.numbersInPlay.every(
@@ -45,6 +44,10 @@ store.watch(
   (newInterval: number) => {
     if (interval.value) {
       window.clearInterval(interval.value);
+    }
+
+    if (!store.getters.isDrawing) {
+      return;
     }
 
     interval.value = window.setInterval(() => getLotteryNumbers(), newInterval);
@@ -80,6 +83,7 @@ store.watch(
     );
 
     const [key] =
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       Object.entries(NUMBER_MAP).find(([_, number]) => number === result) ?? [];
 
     if (!key) {

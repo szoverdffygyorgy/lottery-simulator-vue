@@ -12,12 +12,14 @@ body {
   --green1: #a5d9c8;
   --green2: #e9f5f1;
   --grey1: #e5e5e5;
+  --grey2: #f3f3f3;
   --yellow1: #f6f0c6;
   --white: #fff;
 
   --background: var(--grey1);
 
   --button-background: var(--white);
+  --button-background--hover: var(--grey2);
   --button-text: var(--blue1);
 
   --checkbox-background: var(--white);
@@ -38,7 +40,4 @@ body {
   --slider-thumb: var(--white);
   --slider-thumb-border: var(--green1);
   --slider-track: var(--green2);
-
-  --breakpoint-mobile: 425px;
-  --breakpoint-table: 656px;
 }

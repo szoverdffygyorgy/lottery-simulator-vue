@@ -9,7 +9,6 @@ const randomInt = (
   const range = max - min;
   const newValue = Math.floor(randomFloat() * range + min);
 
-  console.log({ excludedNumbers, newValue });
   if (excludedNumbers.includes(newValue)) {
     return randomInt(min, max, excludedNumbers);
   }

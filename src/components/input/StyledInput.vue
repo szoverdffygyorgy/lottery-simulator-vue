@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { MAX_NUMBER, MIN_NUMBER } from '../../constants';
 import { State } from '../../store/types';
@@ -7,18 +8,25 @@ const props = defineProps(['disabled', 'index', 'value']);
 
 const store = useStore<State>();
 
-const onValueChange = (event: Event) => {
-  const newValue = parseInt((event.target as HTMLInputElement).value);
+const inputValue = computed({
+  get(): number {
+    return props.value;
+  },
+  set(newValue: number): void {
+    if (props.disabled) {
+      return;
+    }
 
-  if (newValue < MIN_NUMBER || newValue > MAX_NUMBER) {
-    return;
-  }
+    if (newValue < MIN_NUMBER || newValue > MAX_NUMBER) {
+      return;
+    }
 
-  const newNumbers = [...store.getters.numbersInPlay];
-  newNumbers[props.index] = newValue ?? '';
+    const newNumbers = [...store.getters.numbersInPlay];
+    newNumbers[props.index] = newValue ?? '';
 
-  store.dispatch('setNumbersInPlay', { numbersInPlay: newNumbers });
-};
+    store.dispatch('setNumbersInPlay', { numbersInPlay: newNumbers });
+  },
+});
 </script>
 
 <template>
@@ -26,14 +34,12 @@ const onValueChange = (event: Event) => {
     class="styled-input"
     type="number"
     :disabled="disabled"
-    :value="value"
-    @input="onValueChange"
+    v-model="inputValue"
   />
 </template>
 
 <style scoped lang="scss">
 .styled-input {
-  -moz-appearance: textfield;
   width: 34px;
   height: 38px;
   outline: none;
