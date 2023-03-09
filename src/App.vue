@@ -37,10 +37,14 @@ store.watch(
 <style scoped lang="scss">
 .app-container {
   width: 100vw;
-  height: 100%;
-  padding-bottom: 32px;
+  height: 100vh;
   background-color: var(--background);
   color: var(--primary-text);
+
+  @media (max-height: 823px) {
+    height: 100%;
+    padding-bottom: 32px;
+  }
 }
 
 .reset-button {

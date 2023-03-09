@@ -131,7 +131,7 @@ store.watch(
     max-width: 320px;
     max-height: 572px;
     padding: 16px 16px 32px 16px;
-    border-radius: 0;
+    border-radius: 2px;
   }
 }
 
