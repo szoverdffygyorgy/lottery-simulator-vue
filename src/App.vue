@@ -37,7 +37,8 @@ store.watch(
 <style scoped lang="scss">
 .app-container {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
+  padding-bottom: 32px;
   background-color: var(--background);
   color: var(--primary-text);
 }
