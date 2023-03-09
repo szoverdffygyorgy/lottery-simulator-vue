@@ -12,17 +12,17 @@ const onResetClick = () => store.replaceState({ ...DEFAULT_STATE });
 
 store.watch(
   (_, getters) => getters.attempts,
-  (attempts) => storage.set('attempts', attempts)
+  (attempts) => storage.set('vue-attempts', attempts)
 );
 
 store.watch(
   (_, getters) => getters.drawSpeed,
-  (drawSpeed) => storage.set('draw-speed', drawSpeed)
+  (drawSpeed) => storage.set('vue-draw-speed', drawSpeed)
 );
 
 store.watch(
   (_, getters) => getters.results,
-  (results) => storage.set('results', results)
+  (results) => storage.set('vue-results', results)
 );
 </script>
 
