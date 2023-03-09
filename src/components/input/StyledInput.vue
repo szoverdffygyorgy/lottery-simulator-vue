@@ -1,15 +1,23 @@
 <script setup lang="ts">
 import { useStore } from 'vuex';
+import { MAX_NUMBER, MIN_NUMBER } from '../../constants';
 import { State } from '../../store/types';
 
-defineProps(['disabled', 'index', 'value']);
+const props = defineProps(['disabled', 'index', 'value']);
 
-const {
-  state: { numbersInPlay },
-} = useStore<State>();
+const store = useStore<State>();
 
 const onValueChange = (event: Event) => {
-  console.log((event.target as HTMLInputElement).value);
+  const newValue = parseInt((event.target as HTMLInputElement).value);
+
+  if (newValue < MIN_NUMBER || newValue > MAX_NUMBER) {
+    return;
+  }
+
+  const newNumbers = [...store.getters.numbersInPlay];
+  newNumbers[props.index] = newValue ?? '';
+
+  store.dispatch('setNumbersInPlay', { numbersInPlay: newNumbers });
 };
 </script>
 

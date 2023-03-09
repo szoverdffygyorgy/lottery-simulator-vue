@@ -6,8 +6,6 @@ import { State } from '../../store/types';
 const store = useStore<State>();
 
 const onChange = (event: Event) => {
-  console.log((event.target as HTMLInputElement).value);
-
   store.dispatch('setDrawSpeed', {
     drawSpeed: parseInt((event.target as HTMLInputElement).value),
   });

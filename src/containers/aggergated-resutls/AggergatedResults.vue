@@ -2,24 +2,22 @@
 import { useStore } from 'vuex';
 import { State } from '../../store/types';
 
-const {
-  state: { attempts },
-} = useStore<State>();
+const store = useStore<State>();
 </script>
 
 <template>
   <div class="container">
     <div class="grid">
       <label class="large-label">Number of tickets:</label>
-      <label class="attempts-label">{{ attempts }}</label>
+      <label class="attempts-label">{{ store.getters.attempts }}</label>
       <label class="label">Years spent:</label>
-      <label class="label">{{ Math.floor(attempts / 52) }}</label>
+      <label class="label">{{ Math.floor(store.getters.attempts / 52) }}</label>
       <label class="label">Cost of tickets:</label>
       <label class="label">{{
         new Intl.NumberFormat('hu-HU', {
           style: 'currency',
           currency: 'HUF',
-        }).format(attempts * 300)
+        }).format(store.getters.attempts * 300)
       }}</label>
     </div>
   </div>

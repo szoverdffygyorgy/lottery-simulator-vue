@@ -6,6 +6,7 @@ import {
   MIN_NUMBER,
   NUMBER_OF_NUMBERS_TO_DRAW,
 } from '../../constants';
+import { NUMBER_MAP } from '../../store/constants';
 import { State } from '../../store/types';
 import { InputFriendlyNumber } from '../../types';
 import randomInt from '../../utils/random/random-int';
@@ -26,13 +27,22 @@ const getLotteryNumbers = () => {
   }).map((v, i, arr) => randomInt(MIN_NUMBER, MAX_NUMBER, arr));
 
   store.dispatch('setDrawnNumbers', { drawnNumbers: numbers });
+
+  if (
+    store.getters.numbersInPlay.every(
+      (value: InputFriendlyNumber) => value !== ''
+    ) &&
+    store.getters.drawnNumbers.every(
+      (value: InputFriendlyNumber) => value !== ''
+    )
+  ) {
+    store.dispatch('incrementAttempts');
+  }
 };
 
 store.watch(
   (_, getters) => getters.drawSpeed,
-  (newInterval) => {
-    console.log({ newInterval });
-
+  (newInterval: number) => {
     if (interval.value) {
       window.clearInterval(interval.value);
     }
@@ -44,9 +54,45 @@ store.watch(
 
 store.watch(
   (_, getters) => getters.isDrawing,
-  (isDrawing) => {
+  (isDrawing: boolean) => {
     if (!isDrawing) {
       window.clearInterval(interval.value);
+    }
+  }
+);
+
+store.watch(
+  (_, getters) => getters.drawnNumbers,
+  (drawnNumbers: InputFriendlyNumber[]) => {
+    if (
+      store.getters.numbersInPlay.some(
+        (value: InputFriendlyNumber) => value === ''
+      ) ||
+      drawnNumbers.some((value: InputFriendlyNumber) => value === '')
+    ) {
+      return;
+    }
+
+    const result = drawnNumbers.reduce<number>(
+      (acc: number, curr: InputFriendlyNumber) =>
+        store.getters.numbersInPlay.includes(curr) ? acc + 1 : acc,
+      0
+    );
+
+    const [key] =
+      Object.entries(NUMBER_MAP).find(([_, number]) => number === result) ?? [];
+
+    if (!key) {
+      return;
+    }
+
+    store.dispatch('setResults', {
+      ...store.getters.results,
+      [key]: store.getters.results[key] + 1,
+    });
+
+    if (result === 5) {
+      store.dispatch('stopDraw');
     }
   }
 );

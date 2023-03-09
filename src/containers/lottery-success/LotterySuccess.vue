@@ -4,16 +4,14 @@ import { State } from '../../store/types';
 import { SUCCESS_ORDER } from './constants';
 import { NUMBER_MAP } from '../../store/constants';
 
-const {
-  state: { results },
-} = useStore<State>();
+const store = useStore<State>();
 </script>
 
 <template>
   <div class="container">
     <div class="cell" v-for="(key, index) in SUCCESS_ORDER" :key="index">
       <label class="cell-title">{{ `${NUMBER_MAP[key]} matches` }}</label>
-      <label class="cell-value">{{ results[key] }}</label>
+      <label class="cell-value">{{ store.getters.results[key] }}</label>
     </div>
   </div>
 </template>

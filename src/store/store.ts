@@ -1,7 +1,7 @@
 import { createStore } from 'vuex';
 import { INITIAL_DRAW_SPEED, NUMBER_OF_NUMBERS_TO_DRAW } from '../constants';
 import { InputFriendlyNumber } from '../types';
-import { State } from './types';
+import { Results, State } from './types';
 
 const store = createStore<State>({
   state: () => ({
@@ -19,37 +19,41 @@ const store = createStore<State>({
     },
   }),
   mutations: {
+    incrementAttempts(state: State) {
+      state.attempts = state.attempts + 1;
+    },
     setDrawSpeed(state: State, { drawSpeed }: { drawSpeed: number }) {
       state.drawSpeed = drawSpeed;
-
-      return state;
     },
     setDrawnNumbers(
       state: State,
       { drawnNumbers }: { drawnNumbers: InputFriendlyNumber[] }
     ) {
       state.drawnNumbers = drawnNumbers;
-
-      return state;
     },
     setIsUsingRandomValues(
       state: State,
       { isUsingRandomValues }: { isUsingRandomValues: boolean }
     ) {
       state.isUsingRandomValues = isUsingRandomValues;
-
-      return state;
     },
     setNumbersInPlay(
       state: State,
       { numbersInPlay }: { numbersInPlay: InputFriendlyNumber[] }
     ) {
       state.numbersInPlay = numbersInPlay;
-
-      return state;
+    },
+    setResults(state: State, results: Results) {
+      state.results = { ...results };
+    },
+    stopDraw(state: State) {
+      state.isDrawing = false;
     },
   },
   actions: {
+    incrementAttempts({ commit }) {
+      commit('incrementAttempts');
+    },
     setDrawSpeed({ commit }, { drawSpeed }: { drawSpeed: number }) {
       commit('setDrawSpeed', { drawSpeed });
     },
@@ -71,27 +75,33 @@ const store = createStore<State>({
     ) {
       commit('setNumbersInPlay', { numbersInPlay });
     },
+    setResults({ commit }, results: Results) {
+      commit('setResults', results);
+    },
+    stopDraw({ commit }) {
+      commit('stopDraw');
+    },
   },
   getters: {
-    attempts(state: State) {
+    attempts(state: State): number {
       return state.attempts;
     },
-    drawnNumbers(state: State) {
+    drawnNumbers(state: State): InputFriendlyNumber[] {
       return state.drawnNumbers;
     },
-    drawSpeed(state: State) {
+    drawSpeed(state: State): number {
       return state.drawSpeed;
     },
-    isDrawing(state: State) {
+    isDrawing(state: State): boolean {
       return state.isDrawing;
     },
-    isUsingRandomValues(state: State) {
+    isUsingRandomValues(state: State): boolean {
       return state.isUsingRandomValues;
     },
-    numbersInPlay(state: State) {
+    numbersInPlay(state: State): InputFriendlyNumber[] {
       return state.numbersInPlay;
     },
-    results(state: State) {
+    results(state: State): Results {
       return state.results;
     },
   },
